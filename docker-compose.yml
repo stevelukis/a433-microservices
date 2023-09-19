@@ -1,0 +1,32 @@
+# Mencantumkan schema version dari Docker Compose
+version: "3.7"
+
+# Mendefinisikan service dari aplikasi
+services:
+  # Service pertama dengan nama item-app
+  item-app:
+    # Mengunduh/mengambil image item-app dengan tag v1 dari Github Packages
+    image: ghcr.io/stevelukis/item-app:v1
+    # Selalu melakukan restart bila container berhenti
+    restart: always
+    # Port mapping ke port 80 di host
+    ports:
+      - 80:8080
+    # Menjalankan item-app setelah item-db berjalan
+    depends_on:
+      - item-db
+
+  # Service kedua dengan nama item-db
+  item-db:
+    # Mengunduh/mengambil image mongo dengan tag 3 dari Docker Hub
+    image: mongo:3
+    # Selalu melakukan restart bila container berhenti
+    restart: always
+    # Memasangkan volume app-db ke direktori /data/db di container
+    volumes:
+      - app-db:/data/db
+
+# Mendefinisikan volume
+volumes:
+  # Membuat volume dengan nama app-db
+  app-db:
