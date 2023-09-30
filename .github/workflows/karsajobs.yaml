@@ -15,6 +15,6 @@ jobs:
       - name: Test
         run: go test -v -short --count=1 $(go list ./...)
       - name: Build app Karsajobs
-        env:
+        env: 
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         run: ./build_push_image_karsajobs.sh
